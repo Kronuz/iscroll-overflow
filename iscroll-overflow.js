@@ -101,6 +101,12 @@ iScroll.prototype = {
 		that._scrolling = true;
 		that.y = -that.scrollTop;
 
+		// Fix to avoid scrolling up/down the whole screen:
+		if(that.scrollTop <= 0)
+			that.scroller.scrollTop = 1;
+		if(that.scrollTop + that.scroller.offsetHeight >= that.scroller.scrollHeight)
+			that.scroller.scrollTop = that.scroller.scrollHeight - that.scroller.offsetHeight - 1;
+
 		if (that.options.onScrollStart) that.options.onScrollStart.call(that, e);
 
 		that._bind(MOVE_EV);
